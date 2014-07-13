@@ -37,9 +37,12 @@ class WordChainer
     @current_words = [source]
     @all_seen_words = {source => nil}
 
+
     while @current_words.empty? == false
       explore_current_words
     end
+
+    p build_path(target)
   end
 
   def explore_current_words
@@ -55,9 +58,9 @@ class WordChainer
         new_current_words << new_word
       end
 
-      new_current_words.each do |x|
-        puts "#{x} => #{@all_seen_words[x]}"
-      end
+      # new_current_words.each do |x|
+#         puts "#{x} => #{@all_seen_words[x]}"
+#       end
 
       @current_words = new_current_words
     end
@@ -66,6 +69,19 @@ class WordChainer
   end
 
   def build_path(target)
+    path = [target]
+
+    while target != nil
+      prev_word = @all_seen_words[target]
+
+      path << prev_word
+
+      target = prev_word
+    end
+
+    path.pop
+
+    path
   end
 
 end
